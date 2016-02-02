@@ -21,6 +21,9 @@ gem 'jbuilder', '~> 2.0'
 # Use Puma as the app server
 gem 'puma'
 
+# devise for authentication
+gem 'devise', :github => 'plataformatec/devise', :branch => 'master'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
