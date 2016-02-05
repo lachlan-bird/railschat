@@ -1,8 +1,8 @@
 class RoomsController < ApplicationController
 
   before_action :authenticate_user!
-  
-  before_action :set_room, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :join, :leave]
 
   # GET /rooms
   # GET /rooms.json
@@ -65,6 +65,30 @@ class RoomsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def join
+    respond_to do |format|
+      if @room.participants << current_user
+        format.html { redirect_to @room, notice: 'Room was successfully updated.' }
+        format.json { render :show, status: :ok, location: @room }
+      else
+        format.html { render :edit }
+        format.json { render json: @room.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def leave
+    respond_to do |format|
+      if @room.participants.delete(current_user)
+        format.html { redirect_to @room, notice: 'Room was successfully updated.' }
+        format.json { render :show, status: :ok, location: @room }
+      else
+        format.html { render :edit }
+        format.json { render json: @room.errors, status: :unprocessable_entity }
+      end
     end
   end
 

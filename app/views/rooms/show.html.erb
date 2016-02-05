@@ -1,3 +1,15 @@
+<%= link_to "Channel List", rooms_path() %>
+
+<% if @room.participants.count > 0 %>
+  <% if @room.participants.find(current_user.id) %>
+    <%= link_to "Leave Room", { :controller => :rooms, :action => :leave }, { :method => :post } %>
+  <% else %>
+    <%= link_to "Join Room", { :controller => :rooms, :action => :join }, { :method => :post } %>
+  <% end %>
+<% else %>
+  <%= link_to "Join Room", { :controller => :rooms, :action => :join }, { :method => :post } %>
+<% end %>
+
 <h1><%= @room.name %></h1>
 
 <div id='messages'>
